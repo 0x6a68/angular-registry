@@ -1,0 +1,10 @@
+{
+  "name": "angular-registry",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.0.6"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.0.6"
+  }
+}
