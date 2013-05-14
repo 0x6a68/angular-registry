@@ -9,4 +9,4 @@ before_script:
 before_install:
   - npm install -g bower
   - npm install
-  - bower install angular
+  - bower install angular angular-mocks
