@@ -1,6 +1,28 @@
 'use strict';
 
-describe('Registry Module - Simple Tasks', function () {
+describe('Registry Module - function definitions', function () {
+
+  beforeEach(module('ngRegistry'));
+
+  it('should have a set function', inject(function ($registry) {
+    expect(typeof $registry.set === 'function').toBe(true);
+  }));
+
+  it('should have a get function', inject(function ($registry) {
+    expect(typeof $registry.get === 'function').toBe(true);
+  }));
+
+  it('should have a det function', inject(function ($registry) {
+    expect(typeof $registry.del === 'function').toBe(true);
+  }));
+
+  it('should have a reset function', inject(function ($registry) {
+    expect(typeof $registry.reset === 'function').toBe(true);
+  }));
+
+});
+
+describe('Registry Module - Functionality Set & Get', function () {
 
   var mock = {
     'mockkey': 'value',
@@ -12,109 +34,73 @@ describe('Registry Module - Simple Tasks', function () {
     $registryProvider.defaults(mock);
   }));
 
-  it('should get the complete defaults', inject(function ($registry) {
+  it('should get the setted defaults', inject(function ($registry) {
     expect($registry.get()).toEqual(mock);
   }));
 
-  it('should set a key - value pair', inject(function ($registry) {
-    $registry.set('keypair', 'value');
-    expect($registry.get('keypair')).toBe('value');
-  }));
-
-  it('should update a key - value pair', inject(function ($registry) {
-    $registry.set('keypair', 'value');
-
-    expect($registry.get('keypair')).toBe('value');
-
-    $registry.set('keypair', 'changed');
-
-    expect($registry.get('keypair')).not.toBe('value');
-    expect($registry.get('keypair')).toBe('changed');
-  }));
-
-  it('should be able to delete a simple key:value pair', inject(function ($registry) {
+  it('should set a simple key - value pair', inject(function ($registry) {
     $registry.set('key', 'value');
-    $registry.del('key');
-    expect($registry.get('key')).not.toBe('value');
-    expect($registry.get('key')).toBeUndefined();
+    expect($registry.get('key')).toBe('value');
   }));
 
-  it('should set and get a deep object', inject(function ($registry){
+  it('should set a deep object', inject(function ($registry) {
     var deep = {
       deep: {
-        deep: {
-          key: 'value'
-        }
+        key: 'value'
       }
     };
-    $registry.set('deep key', deep);
-
-    expect($registry.get('deep key')).toEqual(deep);
+    $registry.set('deep', deep);
+    expect($registry.get('deep')).toEqual(deep);
+    expect($registry.get('deep.deep')).toEqual(deep.deep);
+    expect($registry.get('deep.deep.key')).toBe('value');
   }));
 
-  it('should be able to reset to defaults', inject(function ($registry) {
-    $registry.set('additional key', 'value');
-
-    expect($registry.get()).not.toEqual(mock);
-
-    $registry.reset();
-
-    expect($registry.get()).toEqual(mock);
+  it('should set an array', inject(function ($registry) {
+    $registry.set('array', []);
+    $registry.set('array[2]', 5);
+    expect($registry.get('array[2]')).toBe(5);
   }));
+
+  it('should set a function', inject(function ($registry) {
+    $registry.set('fn', function (num) {
+      return num+num;
+    });
+    expect($registry.get('fn')(4)).toBe(8);
+  }));
+
 });
 
-describe('Registry Module - Advanced Tasks', function() {
+describe('Registry Module - Functionality Del & Reset', function () {
 
-  var mock = {
-    'mock key': {
-      'deeper mock key': 'value',
-      'another deep mock key': 'other value'
-    },
-    'other': 'other value'
+  var defaults = {
+    mock: 'value',
+    other: 'other value'
   };
 
   beforeEach(module('ngRegistry'));
+
   beforeEach(module(function ($registryProvider) {
-    $registryProvider.defaults(mock);
+    $registryProvider.defaults(defaults);
   }));
 
-  it('should set and get a deep object, by a string notation', inject(function ($registry) {
-    var mock = {
-      deep: {
-        key: 'value'
-      }
-    };
-    $registry.set('mock', mock);
-
-    expect($registry.get('mock.deep')).toEqual(mock.deep);
-    expect($registry.get('mock.deep.key')).toBe('value');
+  it('should reset to defaults', inject(function ($registry) {
+    $registry.set('mock', 'changed');
+    $registry.reset();
+    expect($registry.get('mock')).toBe('value');
   }));
 
-  it('should reset to only a part of default, by key', inject(function ($registry) {
-    $registry.set('mock key.deeper mock key', 'changed');
-    $registry.set('other', 'also changed');
-    $registry.reset('mock key');
-
-    expect($registry.get('mock key.deeper mock key')).toBe('value');
-    expect($registry.get('other')).toBe('also changed');
+  it('should reset a part of defaults', inject(function ($registry) {
+    $registry.set('mock', 'changed');
+    $registry.set('new.key.pair', 'value');
+    $registry.reset('mock');
+    expect($registry.get('mock')).toBe('value');
+    expect($registry.get('new.key.pair')).toBe('value');
   }));
 
-  it('should be able to delete a complex object structure', inject(function ($registry) {
-    var mock = {
-      deep: {
-        key: 'value'
-      },
-      otherdeep: {
-        key: 'other value'
-      }
-    };
-
-    $registry.set('mock', mock);
-    $registry.del('mock.deep.key');
-
-    expect($registry.get('mock.deep.key')).not.toBe('value');
-    expect($registry.get('mock.deep.key')).toBeUndefined();
-
-    $registry.set('mock', mock);
+  it('should delete a key - value pair', inject(function ($registry) {
+    $registry.set('key.pair', 'value');
+    $registry.del('key.pair');
+    expect($registry.get('key.pair')).toBeUndefined();
   }));
+
 });

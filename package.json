@@ -1,6 +1,6 @@
 {
   "name": "angular-registry",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Registry Module for AngularJS",
   "main": "angular-registry.js",
   "directories": {
@@ -9,7 +9,10 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --browsers Firefox --single-run"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johannestroeger/angular-registry.git"
+  },
   "keywords": [
     "AngularJS",
     "Registry",
