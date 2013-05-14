@@ -2,7 +2,7 @@
 
 describe('Registry Module - function definitions', function () {
 
-  beforeEach(module('ngRegistry'));
+  beforeEach(module('johannestroeger.registry'));
 
   it('should have a set function', inject(function ($registry) {
     expect(typeof $registry.set === 'function').toBe(true);
@@ -29,7 +29,7 @@ describe('Registry Module - Functionality Set & Get', function () {
     'other': 'other value'
   };
 
-  beforeEach(module('ngRegistry'));
+  beforeEach(module('johannestroeger.registry'));
   beforeEach(module(function ($registryProvider) {
     $registryProvider.defaults(mock);
   }));
@@ -77,7 +77,7 @@ describe('Registry Module - Functionality Del & Reset', function () {
     other: 'other value'
   };
 
-  beforeEach(module('ngRegistry'));
+  beforeEach(module('johannestroeger.registry'));
 
   beforeEach(module(function ($registryProvider) {
     $registryProvider.defaults(defaults);

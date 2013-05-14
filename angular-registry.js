@@ -5,7 +5,7 @@
  *
  */
 
-angular.module('ngRegistry', [])
+angular.module('johannestroeger.registry', [])
 
 .provider('$registry', function () {
 
