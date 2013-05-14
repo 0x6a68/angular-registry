@@ -49,10 +49,10 @@ app.config(function ($registryProvider){
 ### Set / Get / Del (and Reset, if you have set defaults)
 ```javascript
 app.controller('MyCtrl', ['$registry', function ($registry) {
-  $registry.set('key', 'value');
-  $registry.get('key') # register entry: 'key' => 'value'
-  $registry.get() # complete register 
-  $registry.reset() # should reset to configured defaults
+  $registry.set('key', 'value'); // setting registry entry: 'key' => 'value'
+  $registry.get('key')           // getting register entry: 'key'
+  $registry.get()                // complete register 
+  $registry.reset()              // reset to configured defaults
 }]);
 
 ```
