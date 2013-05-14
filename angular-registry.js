@@ -1,8 +1,12 @@
 'use strict';
 
 /**
- * Angular Registry - A Registry Module for Angular
- *
+ * @name        angular-registry
+ * @description A Registry Module for AngularJS
+ * @author      Johannes Troeger <johannes.troeger@gmail.com>
+ * @repository  https://github.com/johannestroeger/angular-registry
+ * @license     http://www.wtfpl.net/ WTFPL – Do What the Fuck You Want to Public License
+ * @version     0.1.0
  */
 
 angular.module('johannestroeger.registry', [])
