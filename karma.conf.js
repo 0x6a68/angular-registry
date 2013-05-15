@@ -9,7 +9,7 @@ files = [
   JASMINE_ADAPTER,
   'vendor/angular/angular.js',
   'vendor/angular-mocks/angular-mocks.js',
-  'angular-registry.js',
+  'src/**/*.js',
   'test/**/*.js'
 ];
 

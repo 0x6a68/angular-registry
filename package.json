@@ -25,6 +25,11 @@
   },
   "license": "WTFPL",
   "devDependencies": {
-    "karma": "~0.8.5"
+    "karma": "~0.8.5",
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-karma": "~0.4.4"
   }
 }
