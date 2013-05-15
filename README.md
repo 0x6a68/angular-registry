@@ -1,5 +1,5 @@
 ## angular-registry [![Build Status](https://travis-ci.org/johannestroeger/angular-registry.png?branch=master)](https://travis-ci.org/johannestroeger/angular-registry) [![Build Status](https://travis-ci.org/johannestroeger/angular-registry.png?branch=unstable)](https://travis-ci.org/johannestroeger/angular-registry)
-A Registry Module for AngularJS. Handle Values and Constants within Angular-Projects easily and controller-wide.
+A Registry Module for AngularJS. Handling Values and Constants within Angular-Projects easily and controller-wide.
 ***
 
 ### Features 
@@ -25,6 +25,7 @@ Or if you already using Bower, add this entry into `bower.json`:
 ```
 ## API
 * defaults(object)
+* cacheLimit(number)
 * get([expression])
 * set(expression, value)
 * del(expression)
@@ -37,12 +38,21 @@ Or if you already using Bower, add this entry into `bower.json`:
 var app = angular.module('app', ['johannestroeger.registry']);
 ```
 
-### Set Defaults (optional) 
+### Set Defaults (optional)
 ```javascript
 app.config(function ($registryProvider){
   $registryProvider.defaults({
     "default": "values"
-  })
+  });
+});
+```
+
+### Setting Cache Limit (optional) default: 100
+Since angular-registry is caching function `$parse calls, you are able to define
+the limit/capacity of this cache. it uses the LRU strategy.
+```javascript
+app.config(function ($registryProvider){
+  $registryProvider.cacheLimit(1000);
 });
 
 ```
@@ -56,3 +66,8 @@ app.controller('MyCtrl', ['$registry', function ($registry) {
 }]);
 
 ```
+## Contributers
+Thanks to the following developers: 
+
+* Pascal Precht - [@pascalprecht](https://github.com/pascalprecht)
+* Andy Joslin - [@ajoslin](https://github.com/ajoslin)
