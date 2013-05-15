@@ -26,7 +26,7 @@ angular.module('johannestroeger.registry', [])
     cacheLimit = limit;
   };
 
-  this.$get = ['$parse', '$cacheFactory', function ($parse, $cacheFactory) {
+  this.$get = function ($parse, $cacheFactory) {
     var cache = $cacheFactory('johannestroeger.registry', {
       capacity: cacheLimit
     });
@@ -71,5 +71,5 @@ angular.module('johannestroeger.registry', [])
         return angular.extend(register, defaults);
       }
     };
-  }];
+  };
 });

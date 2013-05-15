@@ -3,9 +3,13 @@
 module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-conventional-changelog');
 
   grunt.initConfig({
 
@@ -15,7 +19,7 @@ module.exports = function (grunt) {
       karma: ['test/**/*.spec.js']
     },
     jshint: {
-      src: [
+      all: [
         'Gruntfile.js',
         '<%= src.js %>',
         '<%= src.karma %>'
@@ -36,6 +40,17 @@ module.exports = function (grunt) {
         singleRun: true
       }
     },
+    concat: {
+      src: {
+        src: '<%= src.js %>',
+        dest: 'dist/angular-registry-<%= pkg.version %>.js'
+      }
+    },
+    changelog: {
+      options: {
+        dest: 'CHANGELOG.md'
+      }
+    },
     delta: {
       gruntfile: {
         files: 'Gruntfile.js',
@@ -43,17 +58,30 @@ module.exports = function (grunt) {
       },
       src: {
         files: '<%= src.js %>',
-        task: ['jshint:src']
+        task: ['jshint:all']
       },
       karma: {
         files: '<%= src.karma %>',
-        tasks: ['jshint:karma', 'karma:unit']
+        tasks: ['jshint:karma']
+      }
+    },
+    ngmin: {
+      src: {
+        src: '<%= concat.src.dest %>',
+        dest: '<%= concat.src.dest %>'
+      }
+    },
+    uglify: {
+      src: {
+        files: {
+          'dist/angular-registry-<%= pkg.version %>.min.js': 'dist/angular-registry-<%= pkg.version %>.js'
+        }
       }
     }
   });
 
   grunt.renameTask('watch', 'delta');
-  grunt.registerTask('watch', ['default', 'delta']);
-
+  grunt.registerTask('watch', ['delta']);
   grunt.registerTask('default', ['jshint', 'karma']);
+  grunt.registerTask('build', ['default', 'concat:src', 'ngmin:src', 'uglify']);
 };
