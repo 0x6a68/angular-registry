@@ -6,7 +6,7 @@
  * @author      Johannes Troeger <johannes.troeger@gmail.com>
  * @repository  https://github.com/johannestroeger/angular-registry
  * @license     http://www.wtfpl.net/ WTFPL – Do What the Fuck You Want to Public License
- * @version     0.1.1
+ * @version     0.2.0
  */
 
 angular.module('johannestroeger.registry', [])
@@ -15,31 +15,42 @@ angular.module('johannestroeger.registry', [])
 
   var register = {};
   var defaults = {};
+  var cacheLimit = 100;
 
   this.defaults = function (obj) {
     angular.extend(defaults, obj);
     angular.extend(register, defaults);
   };
 
-  this.$get = ['$parse', function ($parse) {
+  this.cacheLimit = function (limit) {
+    cacheLimit = limit;
+  };
 
-    var cache = {};
+  this.$get = ['$parse', '$cacheFactory', function ($parse, $cacheFactory) {
+    var cache = $cacheFactory('johannestroeger.registry', {
+      capacity: cacheLimit
+    });
 
     var fnCache = function (exp) {
-      return (cache[exp]) ? cache[exp] : cache[exp] = $parse(exp);
+      if(!cache.get(exp)) {
+        cache.put(exp, $parse(exp));
+      }
+
+      return cache.get(exp);
     };
 
     var registry = function (root, exp, value, del) {
-      var parse = fnCache(exp);
+      if(!exp) {
+        return root;
+      }
+
+      var getter = fnCache(exp);
 
       if(value || del) {
-        return parse.assign(root, value);
-      }
-      if(exp) {
-        return parse(root);
+        return getter.assign(root, value);
       }
 
-      return root;
+      return getter(root);
     };
 
     return {

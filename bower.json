@@ -1,7 +1,8 @@
 {
   "name": "angular-registry",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "devDependencies": {
+    "angular": "1.0.6",
     "angular-mocks": "~1.0.6"
   }
 }
