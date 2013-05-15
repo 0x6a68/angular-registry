@@ -48,7 +48,7 @@ app.config(function ($registryProvider){
 ```
 
 ### Setting Cache Limit (optional) default: 100
-Since angular-registry is caching function `$parse calls, you are able to define
+Since angular-registry is caching function `$parse` calls, you are able to define
 the limit/capacity of this cache. it uses the LRU strategy.
 ```javascript
 app.config(function ($registryProvider){
