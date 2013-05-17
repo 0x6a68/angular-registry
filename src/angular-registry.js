@@ -19,7 +19,7 @@ angular.module('johannestroeger.registry', [])
 
   this.defaults = function (obj) {
     angular.extend(defaults, obj);
-    angular.extend(register, defaults);
+    angular.extend(register, angular.copy(defaults));
   };
 
   this.cacheLimit = function (limit) {
