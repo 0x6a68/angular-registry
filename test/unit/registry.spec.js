@@ -74,7 +74,11 @@ describe('Registry Module - Functionality Del & Reset', function () {
 
   var defaults = {
     mock: 'value',
-    other: 'other value'
+    other: 'other value',
+    deep: {
+      mock: 'value',
+      other: 'value'
+    }
   };
 
   beforeEach(module('johannestroeger.registry'));
@@ -89,11 +93,17 @@ describe('Registry Module - Functionality Del & Reset', function () {
     expect($registry.get('mock')).toBe('value');
   }));
 
-  it('should reset a part of defaults', inject(function ($registry) {
+  it('should reset a simple key of defaults', inject(function ($registry) {
     $registry.set('mock', 'changed');
-    $registry.set('new.key.pair', 'value');
     $registry.reset('mock');
     expect($registry.get('mock')).toBe('value');
+  }));
+
+  it('should reset a deeper part of defaults', inject(function ($registry) {
+    $registry.set('deep.mock', 'changed');
+    $registry.set('new.key.pair', 'value');
+    $registry.reset('deep');
+    expect($registry.get('deep.mock')).toBe('value');
     expect($registry.get('new.key.pair')).toBe('value');
   }));
 
