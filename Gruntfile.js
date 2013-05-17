@@ -43,7 +43,7 @@ module.exports = function (grunt) {
     concat: {
       src: {
         src: '<%= src.js %>',
-        dest: 'dist/angular-registry-<%= pkg.version %>.js'
+        dest: 'dist/angular-registry.js'
       }
     },
     changelog: {
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
     uglify: {
       src: {
         files: {
-          'dist/angular-registry-<%= pkg.version %>.min.js': 'dist/angular-registry-<%= pkg.version %>.js'
+          'dist/angular-registry.min.js': 'dist/angular-registry.js'
         }
       }
     }
