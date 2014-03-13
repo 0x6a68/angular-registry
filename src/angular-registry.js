@@ -45,11 +45,11 @@ angular.module('johannestroeger.registry', [])
       }
 
       var getter = fnCache(exp);
-
-      if(value || del) {
+      /* jshint eqnull: true */
+      if(value != null || del) {
         return getter.assign(root, value);
       }
-
+      /* jshint eqnull: false */
       return getter(root);
     };
 

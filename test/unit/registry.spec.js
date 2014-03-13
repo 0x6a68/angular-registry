@@ -68,6 +68,10 @@ describe('Registry Module - Functionality Set & Get', function () {
     expect($registry.get('fn')(4)).toBe(8);
   }));
 
+  it('should set 0', inject(function ($registry) {
+    $registry.set('config.type', 0);
+    expect($registry.get('config.type')).toBe(0);
+  }));
 });
 
 describe('Registry Module - Functionality Del & Reset', function () {
